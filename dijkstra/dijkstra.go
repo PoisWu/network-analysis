@@ -3,7 +3,6 @@ package dijkstra
 
 import(
     "container/heap"
-    "fmt"
 )
 
 // I need a structure represent a graph
@@ -14,9 +13,7 @@ import(
 
 // I need a parser to read from the file. 
 
-type as struct {
-    id int
-}
+type as int
 
 // graph is a hash map of ASID: [other AS connect to this as]
 type graph map[as][]as 
@@ -39,7 +36,6 @@ func dijkstra(g graph, as_source as) (map[as]int,map[as]as) {
     }
 
     for pq.Len() > 0 {
-        fmt.Println(pq.Len())
         item := heap.Pop(&pq).(*Item)
 
         res_dist[item.as] = item.distance
@@ -47,7 +43,7 @@ func dijkstra(g graph, as_source as) (map[as]int,map[as]as) {
         for _, v := range(g[item.as]){
             v_item := as2item[v]
             v_origin_dist := v_item.distance
-            if (v_origin_dist > d + 1){
+            if (v_origin_dist == -1  || v_origin_dist > d + 1){
                 pq.update(as2item[v], v, d+1)
                 res_prev[v] = item.as
             }

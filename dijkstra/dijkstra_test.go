@@ -4,25 +4,14 @@ import (
     "testing"
 )
 
-func TestDijkstra(t *testing.T){
-    as1 := as{
-        id: 101,
-    }
-    as2 := as{
-        id: 102,
-    }
-    as3 := as{
-        id: 103,
-    }
-    as4 := as{
-        id: 104,
-    }
-    as5 := as{
-        id: 105,
-    }
-    as6 := as{
-        id: 106,
-    }
+func creatExampleGraph() graph {
+    as1 := 101
+    
+    as2 := 102
+    as3 := 103
+    as4 := 104
+    as5 := 105
+    as6 := 106
 
     mygraph := make(graph)
 
@@ -44,8 +33,13 @@ func TestDijkstra(t *testing.T){
 
     mygraph[as6] = append(mygraph[as6], as3)
     mygraph[as6] = append(mygraph[as6], as4)
+    return mygraph
+}
 
-    dist, prev := dijkstra(mygraph, as1)
+func TestDijkstra(t *testing.T){
+    mygraph := creatExampleGraph()
+
+    dist, prev := dijkstra(mygraph)
 
     for k:= range(dist){
         t.Logf("Dist from as1 to %d is %d", k, dist[k])
